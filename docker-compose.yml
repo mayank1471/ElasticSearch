@@ -11,8 +11,8 @@ services:
       timeout: 30s
       retries: 5
     environment:
-      - discovery.type: "single-node"
-      - ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     volumes:
       - ./elasticsearch/data:/usr/share/elasticsearch/data:rw              # Persistence data
   logstash:
