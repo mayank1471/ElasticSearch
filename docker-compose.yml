@@ -4,9 +4,16 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
     ports:
       - "9200:9200"
-    user: root
+      - "9300:9300"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     environment:
-      - "discovery.type=single-node"
+      - discovery.type: single-node
+      - ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     volumes:
       - ./elasticsearch/data:/usr/share/elasticsearch/data:rw              # Persistence data
   logstash:
